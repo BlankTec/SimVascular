@@ -28,24 +28,15 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# Plug-ins must be ordered according to their dependencies
+set(H_FILES
+    sv4gui_PurkinjeNetworkUtils.h
+)
 
-set(SV_PLUGINS
+set(CPP_FILES
+    sv4gui_PurkinjeNetworkUtils.cxx
+)
 
-  org.sv.gui.qt.application:ON
-
-  org.sv.projectdatanodes:ON
-
-  org.sv.pythondatanodes:ON
-
-  org.sv.gui.qt.projectmanager:ON
-  org.sv.gui.qt.datamanager:ON
-  org.sv.gui.qt.pathplanning:ON
-  org.sv.gui.qt.segmentation:ON
-  org.sv.gui.qt.modeling:ON
-  org.sv.gui.qt.meshing:ON
-  org.sv.gui.qt.simulation:ON
-  org.sv.gui.qt.imageprocessing:ON
-  org.sv.gui.qt.purkinjenetwork:ON
-
+set(RESOURCE_FILES
+  Interactions/seedConfig.xml
+  Interactions/seedInteraction.xml
 )

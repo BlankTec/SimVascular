@@ -28,24 +28,45 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# Plug-ins must be ordered according to their dependencies
-
-set(SV_PLUGINS
-
-  org.sv.gui.qt.application:ON
-
-  org.sv.projectdatanodes:ON
-
-  org.sv.pythondatanodes:ON
-
-  org.sv.gui.qt.projectmanager:ON
-  org.sv.gui.qt.datamanager:ON
-  org.sv.gui.qt.pathplanning:ON
-  org.sv.gui.qt.segmentation:ON
-  org.sv.gui.qt.modeling:ON
-  org.sv.gui.qt.meshing:ON
-  org.sv.gui.qt.simulation:ON
-  org.sv.gui.qt.imageprocessing:ON
-  org.sv.gui.qt.purkinjenetwork:ON
+set(SRC_CPP_FILES
 
 )
+
+set(INTERNAL_CPP_FILES
+    sv4gui_PurkinjeNetwork.cxx
+    sv4gui_PurkinjeSeedContainer.cxx
+    sv4gui_PurkinjeSeedMapper.cxx
+    sv4gui_PurkinjeSeedInteractor.cxx
+    sv4gui_PurkinjeNetworkPluginActivator.cxx
+)
+
+set(MOC_H_FILES
+    sv4gui_PurkinjeNetwork.h
+    sv4gui_PurkinjeSeedContainer.h
+    sv4gui_PurkinjeSeedMapper.h
+    sv4gui_PurkinjeSeedInteractor.h
+    sv4gui_PurkinjeNetworkPluginActivator.h
+)
+
+set(UI_FILES
+    sv4gui_PurkinjeNetwork.ui
+)
+
+set(CACHED_RESOURCE_FILES
+  plugin.xml
+  resources/purkinje_network.png
+)
+
+set(QRC_FILES
+
+)
+
+set(CPP_FILES )
+
+foreach(file ${SRC_CPP_FILES})
+  set(CPP_FILES ${CPP_FILES} ${file})
+endforeach(file ${SRC_CPP_FILES})
+
+foreach(file ${INTERNAL_CPP_FILES})
+  set(CPP_FILES ${CPP_FILES} ${file})
+endforeach(file ${INTERNAL_CPP_FILES})

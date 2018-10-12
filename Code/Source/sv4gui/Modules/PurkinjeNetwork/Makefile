@@ -1,3 +1,5 @@
+# Hey emacs, this is a -*- makefile -*-
+
 # Copyright (c) Stanford University, The Regents of the University of
 #               California, and others.
 #
@@ -28,24 +30,61 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# Plug-ins must be ordered according to their dependencies
+TOP=../../../../../BuildWithMake
 
-set(SV_PLUGINS
+include $(TOP)/include.mk
 
-  org.sv.gui.qt.application:ON
+CXXFLAGS = $(GLOBAL_CXXFLAGS) \
+	   $(LOCAL_INCDIR) \
+	   $(VTK_INCDIRS) \
+	   $(TCLTK_INCDIR) \
+           $(PYTHON_INCDIR) \
+           $(QT_INCDIRS) $(QT_DEFS) \
+	   $(ITK_INCDIRS) \
+           $(MITK_INCDIRS) $(MITK_DEFS)
 
-  org.sv.projectdatanodes:ON
+MODULE_NAME = sv4guiModuleImageProcessing
+MODULE_NAME_ALL_CAPS = SV4GUIMODULEIMAGEPROCESSING
+CXXFLAGS += -D$(MODULE_NAME)_EXPORTS
 
-  org.sv.pythondatanodes:ON
+CXXFLAGS += -DUS_MODULE_NAME="$(MODULE_NAME)"
 
-  org.sv.gui.qt.projectmanager:ON
-  org.sv.gui.qt.datamanager:ON
-  org.sv.gui.qt.pathplanning:ON
-  org.sv.gui.qt.segmentation:ON
-  org.sv.gui.qt.modeling:ON
-  org.sv.gui.qt.meshing:ON
-  org.sv.gui.qt.simulation:ON
-  org.sv.gui.qt.imageprocessing:ON
-  org.sv.gui.qt.purkinjenetwork:ON
+HDRS	= sv4gui_ImageProcessingUtils.h
 
-)
+CXXSRCS	= sv4gui_ImageProcessingUtils.cxx
+
+CXXSRCS += us_init.cxx
+
+UIFILES =
+
+SV_APPEND_CPPMICROSERVICES_TO_DLL = 1
+
+RCFILES = \
+    resource/Interactions/seedConfig.xml \
+    resource/Interactions/seedInteraction.xml
+
+QRCFILES =
+
+CXXSRCS += $(addprefix moc_,$(HDRS:.h=.cxx))
+
+CXXSRCS += $(addprefix rcc_,$(notdir $(QRCFILES:.qrc=.cxx)))
+
+DLLHDRS =
+
+DLLSRCS =
+
+DLLLIBS += $(PYTHON_LIB) $(VTK_LIBS) $(ITK_LIBS) $(QT_LIBS) $(MITK_LIBS)
+
+DLLLIBS += \
+          $(SVLIBFLAG)$(SV_LIB_MODULE_COMMON_NAME)$(LIBLINKEXT) \
+          $(SVLIBFLAG)$(SV_LIB_ITK_LSET_NAME)$(LIBLINKEXT) \
+          $(SVLIBFLAG)$(SV_LIB_REPOSITORY_NAME)$(LIBLINKEXT) \
+          $(SVLIBFLAG)$(SV_LIB_GEOM_NAME)$(LIBLINKEXT) \
+          $(SVLIBFLAG)$(SV_LIB_PATH_NAME)$(LIBLINKEXT) \
+          $(SVLIBFLAG)$(SV_LIB_UTILS_NAME)$(LIBLINKEXT) \
+          $(SVLIBFLAG)$(SV_LIB_GLOBALS_NAME)$(LIBLINKEXT) \
+          $(SVLIBFLAG)$(SV_LIB_VTKSVBOOLEAN_NAME)$(LIBLINKEXT)
+
+TARGET_LIB_NAME = $(SV_LIB_MODULE_IMAGEPROCESSING_NAME)
+
+include $(TOP)/targetlib.mk
